@@ -13,6 +13,8 @@
     <Compile Remove="Resources\Options\OptionsCustomSectionNameRegistration.Result.cs" />
     <Compile Remove="Resources\Options\OptionsWithoutDataAnnotationsValidation.Input.cs" />
     <Compile Remove="Resources\Options\OptionsWithoutDataAnnotationsValidation.Result.cs" />
+    <Compile Remove="Resources\Options\OptionsWithValidateOnStartRegistration.Input.cs" />
+    <Compile Remove="Resources\Options\OptionsWithValidateOnStartRegistration.Result.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +24,8 @@
     <EmbeddedResource Include="Resources\Options\OptionsCustomSectionNameRegistration.Result.cs" />
     <EmbeddedResource Include="Resources\Options\DefaultOptionsRegistration.Input.cs" />
     <EmbeddedResource Include="Resources\Options\DefaultOptionsRegistration.Result.cs" />
+    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartRegistration.Input.cs" />
+    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartRegistration.Result.cs" />
   </ItemGroup>
 
   <ItemGroup>

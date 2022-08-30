@@ -37,8 +37,19 @@ public class OptionsGenerator : ISourceGenerator
 
             string configurationSectionName = attribute.GetNamedArgument<string>("ConfigurationSectionName") ?? type.Name;
             bool validateDataAnnotations = attribute.GetNamedArgument<bool?>("ValidateDataAnnotations") ?? true;
+            bool validateOnStart = attribute.GetNamedArgument<bool?>("ValidateOnStart") ?? false;
 
-            options.Add(new OptionsRegistrations(type.ToDisplayString(), configurationSectionName, validateDataAnnotations));
+            if (!validateDataAnnotations && validateOnStart)
+            {
+                context.ReportDiagnostic(
+                    Diagnostic.Create(
+                        new DiagnosticDescriptor ("OSG001", "", "", nameof(OptionsGenerator), DiagnosticSeverity.Warning, isEnabledByDefault: true), 
+                        Location.None
+                    )
+                );
+            }
+
+            options.Add(new OptionsRegistrations(type.ToDisplayString(), configurationSectionName, validateDataAnnotations, validateOnStart));
         }
         
         context.AddSource("ServiceCollectionExtensions.g.cs", GenerateOptionsServiceCollection(context.Compilation.AssemblyName!, options));
