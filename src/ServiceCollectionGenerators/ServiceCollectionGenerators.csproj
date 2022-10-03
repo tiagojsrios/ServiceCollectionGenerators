@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Package">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>tiagojsrios.ServiceCollectionGenerators</PackageId>
     <Title>ServiceCollection Generators</Title>
-	<Description>Source generator nuget package that helps configuring dependency injection container</Description>
+	  <Description>Source generator nuget package that helps configuring dependency injection container</Description>
     <Authors>Tiago Rios (@tiagojsrios)</Authors>
     <Version>1.0.0</Version>
     <PackageReleaseNotes>Source generator for Options pattern using OptionsAttribute</PackageReleaseNotes>
@@ -15,7 +14,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Build">
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <IsRoslynComponent>true</IsRoslynComponent>
     <LangVersion>latest</LangVersion>
     <IncludeBuildOutput>false</IncludeBuildOutput>

@@ -34,11 +34,12 @@ public class OptionsGeneratorTests
             input = input.Replace(key, value);
             expectedResult = expectedResult.Replace(key, value);
         }
-
+        
         return new CSharpSourceGeneratorTest<OptionsGenerator, XUnitVerifier>
         {
             TestState =
             {
+                ReferenceAssemblies = Microsoft.CodeAnalysis.Testing.ReferenceAssemblies.Net.Net60,
                 AdditionalReferences = {
                     "Microsoft.Extensions.Configuration.Abstractions.dll",
                     "Microsoft.Extensions.DependencyInjection.Abstractions.dll",
