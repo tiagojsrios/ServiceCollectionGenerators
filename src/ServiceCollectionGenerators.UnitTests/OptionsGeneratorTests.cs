@@ -4,7 +4,6 @@ using ServiceCollectionGenerators.Generators;
 using ServiceCollectionGenerators.Helpers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,8 +20,10 @@ public class OptionsGeneratorTests
     [Fact]
     public Task OptionsWithoutDataAnnotationsValidation() => RunEmbeddedResourceTest(nameof(OptionsWithoutDataAnnotationsValidation));
 
+#if NET6_0
     [Fact]
     public Task OptionsWithValidateOnStartRegistration() => RunEmbeddedResourceTest(nameof(OptionsWithValidateOnStartRegistration));
+#endif
 
     private static Task RunEmbeddedResourceTest(string testName, IDictionary<string, string>? placeholders = null)
     {
@@ -39,14 +40,18 @@ public class OptionsGeneratorTests
         {
             TestState =
             {
+#if NET6_0
                 ReferenceAssemblies = Microsoft.CodeAnalysis.Testing.ReferenceAssemblies.Net.Net60,
+#endif
                 AdditionalReferences = {
+#if NET6_0
+                    "Microsoft.Extensions.Hosting.dll",
+#endif
                     "Microsoft.Extensions.Configuration.Abstractions.dll",
                     "Microsoft.Extensions.DependencyInjection.Abstractions.dll",
                     "Microsoft.Extensions.Options.dll",
                     "Microsoft.Extensions.Options.DataAnnotations.dll",
-                    "Microsoft.Extensions.Options.ConfigurationExtensions.dll",
-                    "Microsoft.Extensions.Hosting.dll"
+                    "Microsoft.Extensions.Options.ConfigurationExtensions.dll"
                 },
                 Sources = { input },
                 GeneratedSources =
