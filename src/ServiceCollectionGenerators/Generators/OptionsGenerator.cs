@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.Text;
 using ServiceCollectionGenerators.Helpers;
 using ServiceCollectionGenerators.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ServiceCollectionGenerators.Generators;
@@ -43,16 +44,21 @@ public class OptionsGenerator : ISourceGenerator
             {
                 context.ReportDiagnostic(
                     Diagnostic.Create(
-                        new DiagnosticDescriptor ("OSG001", "", "", nameof(OptionsGenerator), DiagnosticSeverity.Warning, isEnabledByDefault: true), 
+                        new DiagnosticDescriptor("OSG001", "", "", nameof(OptionsGenerator), DiagnosticSeverity.Warning, isEnabledByDefault: true), 
                         Location.None
                     )
                 );
+
+                continue;
             }
 
             options.Add(new OptionsRegistrations(type.ToDisplayString(), configurationSectionName, validateDataAnnotations, validateOnStart));
         }
-        
-        context.AddSource("ServiceCollectionExtensions.g.cs", GenerateOptionsServiceCollection(context.Compilation.AssemblyName!, options));
+
+        if (options.Any())
+        {
+            context.AddSource("ServiceCollectionExtensions.g.cs", GenerateOptionsServiceCollection(context.Compilation.AssemblyName!, options));
+        }
     }
 
     private static SourceText GenerateOptionsServiceCollection(string @namespace, IEnumerable<OptionsRegistrations> options)

@@ -5,6 +5,7 @@ using ServiceCollectionGenerators.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Testing;
 using Xunit;
 
 namespace ServiceCollectionGenerators.UnitTests;
@@ -23,6 +24,9 @@ public class OptionsGeneratorTests
 #if NET6_0
     [Fact]
     public Task OptionsWithValidateOnStartRegistration() => RunEmbeddedResourceTest(nameof(OptionsWithValidateOnStartRegistration));
+
+    [Fact]
+    public Task OptionsWithValidateOnStartButNoDataAnnotationsValidation() => RunEmbeddedResourceTest(nameof(OptionsWithValidateOnStartButNoDataAnnotationsValidation));
 #endif
 
     private static Task RunEmbeddedResourceTest(string testName, IDictionary<string, string>? placeholders = null)
