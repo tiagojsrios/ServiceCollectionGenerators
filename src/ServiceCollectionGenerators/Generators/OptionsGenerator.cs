@@ -44,7 +44,10 @@ public class OptionsGenerator : ISourceGenerator
             {
                 context.ReportDiagnostic(
                     Diagnostic.Create(
-                        new DiagnosticDescriptor("OSG001", "", "", nameof(OptionsGenerator), DiagnosticSeverity.Warning, isEnabledByDefault: true), 
+                        new DiagnosticDescriptor("OSG001",
+                            "Invalid Configuration",
+                            "ValidateDataAnnotations can't be false, when ValidateOnStart is true", 
+                            nameof(OptionsGenerator), DiagnosticSeverity.Error, isEnabledByDefault: true), 
                         Location.None
                     )
                 );

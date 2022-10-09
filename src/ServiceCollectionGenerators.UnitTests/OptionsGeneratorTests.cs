@@ -1,11 +1,9 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Testing;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
+﻿using FluentAssertions;
+using Microsoft.CodeAnalysis;
 using ServiceCollectionGenerators.Generators;
-using ServiceCollectionGenerators.Helpers;
+using ServiceCollectionGenerators.UnitTests.Helpers;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.Testing;
 using Xunit;
 
 namespace ServiceCollectionGenerators.UnitTests;
@@ -13,57 +11,44 @@ namespace ServiceCollectionGenerators.UnitTests;
 public class OptionsGeneratorTests
 {
     [Fact]
-    public Task DefaultOptionsRegistration() => RunEmbeddedResourceTest(nameof(DefaultOptionsRegistration));
+    public Task DefaultOptionsRegistration() => TestHelper.RunEmbeddedResourceTest(
+        nameof(DefaultOptionsRegistration));
 
     [Fact]
-    public Task OptionsCustomSectionNameRegistration() => RunEmbeddedResourceTest(nameof(OptionsCustomSectionNameRegistration));
+    public Task OptionsCustomSectionNameRegistration() => TestHelper.RunEmbeddedResourceTest(
+        nameof(OptionsCustomSectionNameRegistration));
 
     [Fact]
-    public Task OptionsWithoutDataAnnotationsValidation() => RunEmbeddedResourceTest(nameof(OptionsWithoutDataAnnotationsValidation));
+    public Task OptionsWithoutDataAnnotationsValidation() => TestHelper.RunEmbeddedResourceTest(
+        nameof(OptionsWithoutDataAnnotationsValidation));
 
 #if NET6_0
     [Fact]
-    public Task OptionsWithValidateOnStartRegistration() => RunEmbeddedResourceTest(nameof(OptionsWithValidateOnStartRegistration));
+    public Task OptionsWithValidateOnStartRegistration() => TestHelper.RunEmbeddedResourceTest(
+        nameof(OptionsWithValidateOnStartRegistration));
 
     [Fact]
-    public Task OptionsWithValidateOnStartButNoDataAnnotationsValidation() => RunEmbeddedResourceTest(nameof(OptionsWithValidateOnStartButNoDataAnnotationsValidation));
-#endif
-
-    private static Task RunEmbeddedResourceTest(string testName, IDictionary<string, string>? placeholders = null)
+    public void OptionsWithValidateOnStartButNoDataAnnotationsValidation()
     {
-        string input = EmbeddedResourceHelper.GetEmbeddedResource($"{testName}.Input.cs");
-        string expectedResult = EmbeddedResourceHelper.GetEmbeddedResource($"{testName}.Result.cs");
-
-        foreach ((string key, string value) in placeholders ?? Enumerable.Empty<KeyValuePair<string, string>>())
-        {
-            input = input.Replace(key, value);
-            expectedResult = expectedResult.Replace(key, value);
-        }
+        GeneratorDriverRunResult sourceGeneratorRunResult = TestHelper.RunSourceGenerator<OptionsGenerator>(
+            nameof(OptionsWithValidateOnStartButNoDataAnnotationsValidation));
         
-        return new CSharpSourceGeneratorTest<OptionsGenerator, XUnitVerifier>
-        {
-            TestState =
+        sourceGeneratorRunResult.Diagnostics
+            .Should()
+            .HaveCount(1);
+
+        sourceGeneratorRunResult.Diagnostics
+            .Should()
+            .Equal(new List<Diagnostic>
             {
-#if NET6_0
-                ReferenceAssemblies = Microsoft.CodeAnalysis.Testing.ReferenceAssemblies.Net.Net60,
-#endif
-                AdditionalReferences = {
-#if NET6_0
-                    "Microsoft.Extensions.Hosting.dll",
-#endif
-                    "Microsoft.Extensions.Configuration.Abstractions.dll",
-                    "Microsoft.Extensions.DependencyInjection.Abstractions.dll",
-                    "Microsoft.Extensions.Options.dll",
-                    "Microsoft.Extensions.Options.DataAnnotations.dll",
-                    "Microsoft.Extensions.Options.ConfigurationExtensions.dll"
-                },
-                Sources = { input },
-                GeneratedSources =
-                {
-                    (typeof(OptionsGenerator), "OptionsAttribute.g.cs", EmbeddedResourceHelper.GetEmbeddedResource(typeof(OptionsGenerator).Assembly, "OptionsAttribute.cs")),
-                    (typeof(OptionsGenerator), "ServiceCollectionExtensions.g.cs", expectedResult)
-                }
-            },
-        }.RunAsync();
+                Diagnostic.Create(
+                    new DiagnosticDescriptor("OSG001",
+                        "Invalid Configuration",
+                        "ValidateDataAnnotations can't be false, when ValidateOnStart is true",
+                        nameof(OptionsGenerator), DiagnosticSeverity.Error, isEnabledByDefault: true),
+                    Location.None
+                )
+            });
     }
+#endif
 }
