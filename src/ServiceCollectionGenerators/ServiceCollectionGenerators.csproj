@@ -8,9 +8,9 @@
       Source generator that will automate the process of registering services in the dependency injection container
     </Description>
     <Authors>Tiago Rios (@tiagojsrios)</Authors>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <PackageReleaseNotes>
-      Implemented OptionsGenerator which will register in the dependency injection container classes that have OptionsAttribute
+      Added ValidateOnStart property to OptionsAttribute
     </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/tiagojsrios/ServiceCollectionGenerators</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tiagojsrios/ServiceCollectionGenerators</RepositoryUrl>
