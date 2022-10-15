@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;netcoreapp3.1</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,9 @@
     <Compile Remove="Resources\Options\OptionsCustomSectionNameRegistration.Result.cs" />
     <Compile Remove="Resources\Options\OptionsWithoutDataAnnotationsValidation.Input.cs" />
     <Compile Remove="Resources\Options\OptionsWithoutDataAnnotationsValidation.Result.cs" />
+    <Compile Remove="Resources\Options\OptionsWithValidateOnStartButNoDataAnnotationsValidation.Input.cs" />
+    <Compile Remove="Resources\Options\OptionsWithValidateOnStartRegistration.Input.cs" />
+    <Compile Remove="Resources\Options\OptionsWithValidateOnStartRegistration.Result.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,15 +26,20 @@
     <EmbeddedResource Include="Resources\Options\OptionsCustomSectionNameRegistration.Result.cs" />
     <EmbeddedResource Include="Resources\Options\DefaultOptionsRegistration.Input.cs" />
     <EmbeddedResource Include="Resources\Options\DefaultOptionsRegistration.Result.cs" />
+    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartButNoDataAnnotationsValidation.Input.cs" />
+    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartRegistration.Input.cs" />
+    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartRegistration.Result.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
+    <PackageReference Include="FluentAssertions" Version="6.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.3.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.XUnit" Version="1.1.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.2.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" Condition=" '$(TargetFramework)' == 'net6.0' " />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+    <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>

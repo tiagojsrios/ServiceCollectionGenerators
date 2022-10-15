@@ -11,5 +11,7 @@ namespace ServiceCollectionGenerators.Attributes
         public string ConfigurationSectionName { get; set; }
 
         public bool ValidateDataAnnotations { get; set; }
+
+        public bool ValidateOnStart { get; set; }
     }
 }

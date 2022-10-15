@@ -1,22 +1,26 @@
 ﻿using ServiceCollectionGenerators.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace ServiceCollectionGenerators.Models;
 
 public class OptionsRegistrations
 {
-    public string Name { get; set; }
+    public string Name { get; }
 
-    public string ConfigurationSectionName { get; set; }
+    public string ConfigurationSectionName { get; }
 
-    public bool ValidateDataAnnotations { get; set; }
+    public bool ValidateDataAnnotations { get; }
 
-    public OptionsRegistrations(string name, string configurationSectionName, bool validateDataAnnotations)
+    public bool ValidateOnStart { get; }
+
+    public OptionsRegistrations(string name, string configurationSectionName, bool validateDataAnnotations, bool validateOnStart)
     {
         Name = name;
         ConfigurationSectionName = configurationSectionName;
         ValidateDataAnnotations = validateDataAnnotations;
+        ValidateOnStart = validateOnStart;
     }
 
     public static string RenderClass(string @namespace, IEnumerable<OptionsRegistrations> options) =>
@@ -43,14 +47,20 @@ namespace {@namespace}.Extensions
     /// </summary>
     public static string GetDependencyInjectionEntry(OptionsRegistrations options)
     {
+        StringBuilder sb = new($"services.AddOptions<{options.Name}>()" +
+                   $".Bind(configuration.GetSection(\"{options.ConfigurationSectionName}\"))");
+        
         if (options.ValidateDataAnnotations)
         {
-            return $"services.AddOptions<{options.Name}>()" +
-                   $".Bind(configuration.GetSection(\"{options.ConfigurationSectionName}\"))" +
-                   ".ValidateDataAnnotations();";
+            sb.Append(".ValidateDataAnnotations()");
+        }
+        
+        if (options.ValidateOnStart)
+        {
+            sb.Append(".ValidateOnStart()");
         }
 
-        return $"services.AddOptions<{options.Name}>()" +
-               $".Bind(configuration.GetSection(\"{options.ConfigurationSectionName}\"));";
+        sb.Append(";");
+        return sb.ToString();
     }
 }
