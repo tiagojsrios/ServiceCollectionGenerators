@@ -1,12 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Package">
-    <PackageId>tiagojsrios.ServiceCollectionGenerators</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>ServiceCollectionGenerators</PackageId>
     <Title>ServiceCollection Generators</Title>
-	  <Description>Source generator nuget package that helps configuring dependency injection container</Description>
+    <Description>
+      Source generator that will automate the process of registering services in the dependency injection container
+    </Description>
     <Authors>Tiago Rios (@tiagojsrios)</Authors>
-    <Version>1.0.0</Version>
-    <PackageReleaseNotes>Source generator for Options pattern using OptionsAttribute</PackageReleaseNotes>
+    <Version>0.1.0</Version>
+    <PackageReleaseNotes>
+      Implemented OptionsGenerator which will register in the dependency injection container classes that have OptionsAttribute
+    </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/tiagojsrios/ServiceCollectionGenerators</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tiagojsrios/ServiceCollectionGenerators</RepositoryUrl>
     <PackageTags>dependencyinjection sourcegenerators .net servicecollection</PackageTags>
