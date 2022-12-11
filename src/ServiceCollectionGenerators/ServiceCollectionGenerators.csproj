@@ -36,7 +36,9 @@
 
   <ItemGroup>
     <Compile Remove="Attributes\OptionsAttribute.cs" />
+    <Compile Remove="Attributes\ServiceDescriptorAttribute.cs" />
     <EmbeddedResource Include="Attributes\OptionsAttribute.cs" />
+    <EmbeddedResource Include="Attributes\ServiceDescriptorAttribute.cs"/>
   </ItemGroup>
 
   <ItemGroup>

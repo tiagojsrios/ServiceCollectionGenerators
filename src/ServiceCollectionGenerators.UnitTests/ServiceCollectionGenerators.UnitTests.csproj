@@ -8,27 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Resources\Options\DefaultOptionsRegistration.Input.cs" />
-    <Compile Remove="Resources\Options\DefaultOptionsRegistration.Result.cs" />
-    <Compile Remove="Resources\Options\OptionsCustomSectionNameRegistration.Input.cs" />
-    <Compile Remove="Resources\Options\OptionsCustomSectionNameRegistration.Result.cs" />
-    <Compile Remove="Resources\Options\OptionsWithoutDataAnnotationsValidation.Input.cs" />
-    <Compile Remove="Resources\Options\OptionsWithoutDataAnnotationsValidation.Result.cs" />
-    <Compile Remove="Resources\Options\OptionsWithValidateOnStartButNoDataAnnotationsValidation.Input.cs" />
-    <Compile Remove="Resources\Options\OptionsWithValidateOnStartRegistration.Input.cs" />
-    <Compile Remove="Resources\Options\OptionsWithValidateOnStartRegistration.Result.cs" />
+    <Compile Remove="Resources\Options\*.cs" />
+    <Compile Remove="Resources\ServiceDescriptor\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Options\OptionsWithoutDataAnnotationsValidation.Input.cs" />
-    <EmbeddedResource Include="Resources\Options\OptionsWithoutDataAnnotationsValidation.Result.cs" />
-    <EmbeddedResource Include="Resources\Options\OptionsCustomSectionNameRegistration.Input.cs" />
-    <EmbeddedResource Include="Resources\Options\OptionsCustomSectionNameRegistration.Result.cs" />
-    <EmbeddedResource Include="Resources\Options\DefaultOptionsRegistration.Input.cs" />
-    <EmbeddedResource Include="Resources\Options\DefaultOptionsRegistration.Result.cs" />
-    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartButNoDataAnnotationsValidation.Input.cs" />
-    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartRegistration.Input.cs" />
-    <EmbeddedResource Include="Resources\Options\OptionsWithValidateOnStartRegistration.Result.cs" />
+    <EmbeddedResource Include="Resources\Options\*" />
+    <EmbeddedResource Include="Resources\ServiceDescriptor\*" />
   </ItemGroup>
 
   <ItemGroup>

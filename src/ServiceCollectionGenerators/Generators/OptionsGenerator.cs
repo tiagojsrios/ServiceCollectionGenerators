@@ -16,7 +16,8 @@ public class OptionsGenerator : ISourceGenerator
 
     public void Initialize(GeneratorInitializationContext context)
     {
-        context.RegisterForPostInitialization(ctx => ctx.AddSource($"{OptionsAttribute}.g.cs", EmbeddedResourceHelper.GetEmbeddedResource($"{OptionsAttribute}.cs")));
+        context.RegisterForPostInitialization(ctx => ctx.AddSource($"{OptionsAttribute}.g.cs", 
+            EmbeddedResourceHelper.GetEmbeddedResource($"{OptionsAttribute}.cs")));
         context.RegisterForSyntaxNotifications(() => new AttributeSyntaxReceiver(false, OptionsAttribute));
     }
 
