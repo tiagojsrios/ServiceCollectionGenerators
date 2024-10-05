@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Testing;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
+using Microsoft.CodeAnalysis.Testing;
 using ServiceCollectionGenerators.Generators;
 using ServiceCollectionGenerators.Helpers;
 using System;
@@ -33,18 +33,19 @@ internal static class TestHelper
     {
         string input = EmbeddedResourceHelper.GetEmbeddedResource($"{testName}.Input.cs");
         string expectedResult = EmbeddedResourceHelper.GetEmbeddedResource($"{testName}.Result.cs");
-        
-        return new CSharpSourceGeneratorTest<OptionsGenerator, XUnitVerifier>
+
+        return new CSharpSourceGeneratorTest<OptionsGenerator, DefaultVerifier>
         {
             TestState =
             {
 #if NET6_0
                 ReferenceAssemblies = Microsoft.CodeAnalysis.Testing.ReferenceAssemblies.Net.Net60,
 #endif
-                AdditionalReferences = {
-#if NET6_0
-                    "Microsoft.Extensions.Hosting.dll",
+#if NET8_0
+                ReferenceAssemblies = Microsoft.CodeAnalysis.Testing.ReferenceAssemblies.Net.Net80,
 #endif
+                AdditionalReferences = {
+                    "Microsoft.Extensions.Hosting.dll",
                     "Microsoft.Extensions.Configuration.Abstractions.dll",
                     "Microsoft.Extensions.DependencyInjection.Abstractions.dll",
                     "Microsoft.Extensions.Options.dll",

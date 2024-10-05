@@ -22,7 +22,6 @@ public class OptionsGeneratorTests
     public Task OptionsWithoutDataAnnotationsValidation() => TestHelper.RunEmbeddedResourceTest(
         nameof(OptionsWithoutDataAnnotationsValidation));
 
-#if NET6_0
     [Fact]
     public Task OptionsWithValidateOnStartRegistration() => TestHelper.RunEmbeddedResourceTest(
         nameof(OptionsWithValidateOnStartRegistration));
@@ -32,7 +31,7 @@ public class OptionsGeneratorTests
     {
         GeneratorDriverRunResult sourceGeneratorRunResult = TestHelper.RunSourceGenerator<OptionsGenerator>(
             nameof(OptionsWithValidateOnStartButNoDataAnnotationsValidation));
-        
+
         sourceGeneratorRunResult.Diagnostics
             .Should()
             .HaveCount(1);
@@ -50,5 +49,4 @@ public class OptionsGeneratorTests
                 )
             });
     }
-#endif
 }
